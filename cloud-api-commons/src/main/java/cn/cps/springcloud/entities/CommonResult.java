@@ -5,8 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @auther zzyy
- * @create 2020-02-18 17:23
+ * @Author: Cai Peishen
+ * @Date: 2020/11/3 18:33
+ * @Description: 固定返回格式化工具类
  */
 @Data
 @AllArgsConstructor

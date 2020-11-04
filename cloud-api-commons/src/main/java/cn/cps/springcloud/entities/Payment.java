@@ -7,8 +7,9 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * @auther zzyy
- * @create 2020-02-18 17:22
+ * @Author: Cai Peishen
+ * @Date: 2020/11/3 18:33
+ * @Description: 消费对象
  */
 @Data
 @AllArgsConstructor
