@@ -15,13 +15,15 @@ import javax.annotation.Resource;
  * @Date: 2020/11/3 18:32
  * @Description:
  */
-@RestController
 @Slf4j
+@RestController
 public class OrderController
 {
-    public static final String PAYMENT_URL = "http://localhost:8001";
+    // 单机
+    // public static final String PAYMENT_URL = "http://localhost:8001";
 
-    //public static final String PAYMENT_URL = "http://CLOUD-PAYMENT-SERVICE";
+    // 集群时，需要指明一种负载均衡策略，不然多个服务，不知道调用哪一个 -> 在RestTemplate配置上添加@LoadBalanced
+    public static final String PAYMENT_URL = "http://CLOUD-PAYMENT-SERVICE";
 
     @Resource
     private RestTemplate restTemplate;

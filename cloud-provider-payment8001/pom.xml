@@ -20,7 +20,7 @@
         </dependency>
         <!--  自定定义的实体类   -->
         <dependency>
-            <groupId>com.atguigu.springcloud</groupId>
+            <groupId>cn.cps.springcloud</groupId>
             <artifactId>cloud-api-commons</artifactId>
             <version>${project.version}</version>
         </dependency>
