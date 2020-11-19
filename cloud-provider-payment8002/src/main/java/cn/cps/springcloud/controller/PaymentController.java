@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author: Cai Peishen
@@ -34,7 +35,7 @@ public class PaymentController
 
 
     @PostMapping(value = "/payment/create")
-    public CommonResult create(@RequestBody Payment payment){
+    public CommonResult create(@RequestBody Payment payment) {
         int result = paymentService.create(payment);
         log.info("*****插入结果："+result);
 
@@ -47,7 +48,7 @@ public class PaymentController
     }
 
     @GetMapping(value = "/payment/get/{id}")
-    public CommonResult<Payment> getPaymentById(@PathVariable("id") Long id){
+    public CommonResult<Payment> getPaymentById(@PathVariable("id") Long id) {
         Payment payment = paymentService.getPaymentById(id);
 
         if(payment != null){
@@ -58,7 +59,7 @@ public class PaymentController
     }
 
     @GetMapping("/payment/discover")
-    public void discover(){
+    public void discover() {
         List<String> services = discoveryClient.getServices();
         for(String s : services){
             log.info("服务名："+s);
@@ -73,6 +74,14 @@ public class PaymentController
     @GetMapping(value = "/payment/lb")
     public String getPaymentLB()
     {
+        return serverPort;
+    }
+
+
+    @GetMapping(value = "/payment/feign/timeout")
+    public String paymentFeignTimeout() {
+        // 业务逻辑处理正确，但是需要耗费3秒钟
+        try { TimeUnit.SECONDS.sleep(3); } catch (InterruptedException e) { e.printStackTrace(); }
         return serverPort;
     }
 
