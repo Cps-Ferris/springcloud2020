@@ -27,6 +27,8 @@ public class PaymentController
     @Value("${server.port}")
     private String serverPort;
 
+    //====服务降级
+
     @GetMapping("/payment/hystrix/ok/{id}")
     public String paymentInfo_OK(@PathVariable("id") Integer id) {
         String result = paymentService.paymentInfo_OK(id);
@@ -42,5 +44,14 @@ public class PaymentController
         return result;
     }
 
+
+    //====服务熔断
+    @GetMapping("/payment/circuit/{id}")
+    public String paymentCircuitBreaker(@PathVariable("id") Integer id)
+    {
+        String result = paymentService.paymentCircuitBreaker(id);
+        log.info("****result: "+result);
+        return result;
+    }
 
 }

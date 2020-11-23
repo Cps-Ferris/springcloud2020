@@ -8,7 +8,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 /**
  * @Author: Cai Peishen
  * @Date: 2020/11/19 16:18
- * @Description:
+ * @Description: 服务降级 | 服务熔断
  */
 @EnableEurekaClient
 @EnableCircuitBreaker
