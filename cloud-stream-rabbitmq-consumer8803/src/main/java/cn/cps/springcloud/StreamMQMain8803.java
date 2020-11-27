@@ -6,11 +6,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @Author: Cai Peishen
  * @Date: 2020/11/27 15:11
- * @Description: Strean消息驱动生产者
+ * @Description: Stream消息驱动消费者
  */
 @SpringBootApplication
-public class StreamMQMain8801 {
-    public static void main(String[] args) {
-        SpringApplication.run(StreamMQMain8801.class,args);
+public class StreamMQMain8803
+{
+    public static void main(String[] args)
+    {
+        SpringApplication.run(StreamMQMain8803.class,args);
     }
 }
