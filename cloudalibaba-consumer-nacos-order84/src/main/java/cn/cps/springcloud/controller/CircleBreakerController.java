@@ -3,6 +3,7 @@ package cn.cps.springcloud.controller;
 import cn.cps.springcloud.entities.CommonResult;
 import cn.cps.springcloud.entities.Payment;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,9 +26,12 @@ public class CircleBreakerController {
     private RestTemplate restTemplate;
 
     @RequestMapping("/consumer/fallback/{id}")
-    @SentinelResource(value = "fallback") //没有配置，访问该请求，让sentinel生效(懒加载)
+    //@SentinelResource(value = "fallback") //没有配置，访问该请求，让sentinel生效(懒加载)
+    //@SentinelResource(value = "fallback", fallback = "fallback") //fallback只负责业务异常
+    //@SentinelResource(value = "fallback", blockHandler = "blockHandler") //blockHandler只负责sentinel控制台配置违规
+    @SentinelResource(value = "fallback", fallback = "fallback", blockHandler = "blockHandler")
     public CommonResult<Payment> fallback(@PathVariable Long id) {
-        CommonResult<Payment> result = restTemplate.getForObject(SERVICE_URL + "/paymentSQL/"+id, CommonResult.class,id);
+        CommonResult<Payment> result = restTemplate.getForObject(SERVICE_URL + "/paymentSQL/"+id,CommonResult.class,id);
 
         if (id == 4) {
             throw new IllegalArgumentException ("IllegalArgumentException,非法参数异常....");
@@ -36,6 +40,16 @@ public class CircleBreakerController {
         }
 
         return result;
+    }
+    //本例是fallback
+    public CommonResult fallback(@PathVariable  Long id,Throwable e) {
+        Payment payment = new Payment(id,"null");
+        return new CommonResult<>(444,"兜底异常handlerFallback,exception内容  "+e.getMessage(),payment);
+    }
+    //本例是blockHandler
+    public CommonResult blockHandler(@PathVariable  Long id, BlockException blockException) {
+        Payment payment = new Payment(id,"null");
+        return new CommonResult<>(445,"blockHandler-sentinel限流,无此流水: blockException  "+blockException.getMessage(),payment);
     }
 
 }
