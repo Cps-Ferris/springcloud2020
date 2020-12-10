@@ -31,6 +31,8 @@ public class OrderServiceImpl implements OrderService {
      * 简单说：下订单->扣库存->减余额->改状态
      */
     @Override
+    //Seata分布式事务 fsp-create-order 自定义，唯一就可以
+    @GlobalTransactional(name = "fsp-create-order", rollbackFor = Exception.class)
     public void create(Order order) {
         log.info("----->开始新建订单");
         //1 新建订单
